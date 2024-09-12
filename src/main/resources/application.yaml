@@ -1,0 +1,23 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      routes:
+        - id: llm_service
+          uri: lb://LLM-SERVICE
+          predicates:
+            - Path=/llm-service/**
+        - id: user_service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user-service/**
+  eureka:
+    instance:
+      preferIpAddress: true
+    client:
+      serviceUrl:
+        defaultZone: http://localhost:8761/eureka/  # Adjust to your Eureka server URL
